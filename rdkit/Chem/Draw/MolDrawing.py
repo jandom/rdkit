@@ -61,6 +61,11 @@ class DrawingOptions(object):
   # used to adjust overall scaling for molecules that have been laid out with non-standard
   # bond lengths
   coordScale= 1.0
+  
+  legendMarginX= 0.5
+  legendMarginY= 0.94 # the 0.94 is extremely empirical
+  legendFontFace= 'sans'
+  legendFontSize= 12 
 
   elemDict={
     1:(0.55,0.55,0.55),

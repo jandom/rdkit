@@ -49,6 +49,8 @@ RDNumeric::DoubleSymmMatrix *computeCovarianceMatrix(const std::vector<RDGeom::P
                                                      const RDGeom::Point3D &center,
                                                      bool normalize=false,
                                                      const std::vector<double> *wts=0);
+RDGeom::Transform3D *computeCanonicalTransformFromCovMat(RDNumeric::DoubleSymmMatrix *covMat,
+                                                        unsigned int nPts);
 RDGeom::Transform3D *computeCanonicalTransform(const std::vector<RDGeom::Point3D const *> &pts,
                                                const RDGeom::Point3D *center=0,
                                                bool normalizeCovar=false,

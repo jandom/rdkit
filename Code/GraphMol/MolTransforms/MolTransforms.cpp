@@ -11,7 +11,7 @@
 #include "MolTransforms.h"
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/QueryOps.h>
-#include <Numerics/EigenSolvers/PowerEigenSolver.h>
+#include <Numerics/Alignment/AlignPoints.h>
 #include <Numerics/SymmMatrix.h>
 #include <Numerics/Matrix.h>
 #include <Geometry/Transform3D.h>
@@ -19,7 +19,6 @@
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/Exceptions.h>
 
-#define EIGEN_TOLERANCE 1.0e-2
 namespace MolTransforms {
 
 using namespace RDKit;

@@ -16,6 +16,7 @@
 #include <Numerics/SymmMatrix.h>
 
 namespace RDNumeric {
+
 namespace EigenSolvers {
 //! Compute the \c numEig largest eigenvalues and, optionally,  the
 //corresponding
@@ -29,7 +30,9 @@ namespace EigenSolvers {
 N*numEig)
 \param seed         Optional values to seed the random value generator used to
                     initialize the eigen vectors
+\param tolerance    numeric threshold to use during the optimization
 \return a boolean indicating whether or not the calculation converged.
+
 
 <b>Notes:</b>
 - The matrix, \c mat, is changed in this function
@@ -53,13 +56,17 @@ We use the iterative power method, which works like this:
 
 */
 bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
-                      DoubleVector &eigenValues, DoubleMatrix *eigenVectors = 0,
-                      int seed = -1);
+                      DoubleVector &eigenValues,
+                      DoubleMatrix *eigenVectors=0,
+                      int seed=-1,
+                      double tolerance=0.001);
 //! \overload
-static inline bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
-                                    DoubleVector &eigenValues,
-                                    DoubleMatrix &eigenVectors, int seed = -1) {
-  return powerEigenSolver(numEig, mat, eigenValues, &eigenVectors, seed);
+static bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
+                      DoubleVector &eigenValues,
+                      DoubleMatrix &eigenVectors,
+                             int seed=-1,
+                             double tolerance=0.001) {
+  return powerEigenSolver(numEig,mat,eigenValues,&eigenVectors,seed,tolerance);
 }
 };
 };

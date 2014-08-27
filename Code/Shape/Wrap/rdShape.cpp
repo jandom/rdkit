@@ -21,8 +21,8 @@ namespace RDKit {
                bool scoreOnly=false, 
                unsigned int nBestHits = 10,
                unsigned int maxIterations=10,
-               std::string whichScore = "Tanimoto") { 
-    SolutionInfo si = shape(refMol, dbMol, nBestHits, scoreOnly, maxIterations, whichScore);
+               std::string whichScore = "Tanimoto", unsigned int confIndex=0) {
+    SolutionInfo si = shape(refMol, dbMol, nBestHits, scoreOnly, maxIterations, whichScore, confIndex);
     return si.score;
   }
 }
@@ -46,7 +46,7 @@ BOOST_PYTHON_MODULE(rdShape) {
     - scoreOnly : only score, don't align (default: false)\n\
     - maxIteration : maximum number of iterations (default: 10) \n\
     - whichScore : possible options are Tanimoto, Tversky_Ref, Tversky_Db (default: Tanimoto) \n\
-                  \n\
+    - confIndex : dbMol conformer index (default: 0)              \n\\n\
  RETURNS:\n\n\
     double Tanimoto volume overlap coefficient\n\
 \n";
@@ -55,7 +55,8 @@ BOOST_PYTHON_MODULE(rdShape) {
                python::arg("scoreOnly")=false,
                python::arg("nBestHits")=10,
                python::arg("maxIter")=0,
-               python::arg("whichScore")="Tanimoto"),
+               python::arg("whichScore")="Tanimoto",
+               python::arg("confIndex")=0),
               docString.c_str());
 }
   

@@ -4,7 +4,7 @@
 
 SolutionInfo shape(RDKit::ROMol & refMol, RDKit::ROMol & dbMol,
 		   unsigned int nBestHits, bool scoreOnly,
-		   unsigned int maxIter, std::string whichScore)
+		   unsigned int maxIter, std::string whichScore, unsigned int confIndex)
 {
 
     //std::string whichScore = "Shape-it::Tanimoto";
@@ -26,7 +26,7 @@ SolutionInfo shape(RDKit::ROMol & refMol, RDKit::ROMol & dbMol,
     GaussianVolume refVolume;
 
     // List all Gaussians and their respective intersections
-    listAtomVolumes(refMol, refVolume);
+    listAtomVolumes(refMol, refVolume, 0);
 
     // Move the Gaussian towards its center of geometry and align with principal axes
     if (!scoreOnly) {
@@ -74,7 +74,7 @@ SolutionInfo shape(RDKit::ROMol & refMol, RDKit::ROMol & dbMol,
 
     // Create the set of Gaussians of database molecule
     GaussianVolume dbVolume;
-    listAtomVolumes(dbMol, dbVolume);
+    listAtomVolumes(dbMol, dbVolume, confIndex);
 
     // Overlap with reference
     AlignmentInfo res;

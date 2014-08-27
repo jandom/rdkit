@@ -21,4 +21,4 @@
 
 SolutionInfo shape(RDKit::ROMol & refMol, RDKit::ROMol & dbMol,
 		   unsigned int nBestHits, bool scoreOnly,
-		   unsigned int maxIter, std::string whichScore);
+		   unsigned int maxIter, std::string whichScore, unsigned int confIndex);

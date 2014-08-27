@@ -30,7 +30,8 @@ Shape-it is linked against OpenBabel version 2.
 
 #include <Shape/gaussianVolume.h>
 #include <Shape/solutionInfo.h>
-#include <eigen3/Eigen/Dense>
+
+#include <Eigen/Dense>
 
 
 GaussianVolume::GaussianVolume(void)
@@ -122,7 +123,7 @@ double GAlpha(unsigned int an)
 
 
 
-void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv)
+void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv, unsigned int confIndex)
 {
     // Prepare the vector to store the atom and overlap volumes;
     unsigned int N(0);
@@ -160,7 +161,7 @@ void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv)
     int atomIndex = 0;		// keeps track of the atoms processed so far
     int vecIndex = N;		// keeps track of the last element added to the vectors
     RDKit::ROMol::AtomIterator ai1;
-    RDKit::Conformer conf = mol.getConformer(0);
+    RDKit::Conformer conf = mol.getConformer(confIndex);
     for (ai1 = mol.beginAtoms(); ai1 != mol.endAtoms(); ai1++) {
 	RDKit::Atom * a = *ai1;
 	int idx = a->getIdx();

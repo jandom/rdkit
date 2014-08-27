@@ -85,7 +85,7 @@ public:
 
 
 
-void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv);
+void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv, unsigned int confIndex);
 void initOrientation(GaussianVolume &);
 double atomOverlap(GaussianVolume &, GaussianVolume &);
 double GAlpha(unsigned int);

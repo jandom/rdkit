@@ -34,10 +34,10 @@ Shape-it is linked against OpenBabel version 2.
 
 void
 positionMolecule(RDKit::ROMol & m, RDGeom::Point3D & centroid,
-		 double rotation[3][3])
+		 double rotation[3][3], unsigned int confId)
 {
     RDKit::ROMol::AtomIterator ai;
-    RDKit::Conformer conf = m.getConformer(0);
+    RDKit::Conformer conf = m.getConformer(confId);
     for (ai = m.beginAtoms(); ai != m.endAtoms(); ai++) {
 	RDKit::Atom * a = *ai;
 	int idx = a->getIdx();
@@ -55,7 +55,7 @@ positionMolecule(RDKit::ROMol & m, RDGeom::Point3D & centroid,
 	point.z =
 	    rotation[0][2] * x + rotation[1][2] * y + rotation[2][2] * z;
 
-	m.getConformer(0).setAtomPos(idx, point);
+	m.getConformer(confId).setAtomPos(idx, point);
     }
     return;
 }
@@ -63,10 +63,10 @@ positionMolecule(RDKit::ROMol & m, RDGeom::Point3D & centroid,
 
 void
 repositionMolecule(RDKit::ROMol & m, double rotation[3][3],
-		   RDGeom::Point3D & centroid)
+		   RDGeom::Point3D & centroid, unsigned int confId)
 {
     RDKit::ROMol::AtomIterator ai;
-    RDKit::Conformer conf = m.getConformer(0);
+    RDKit::Conformer conf = m.getConformer(confId);
     for (ai = m.beginAtoms(); ai != m.endAtoms(); ai++) {
 	RDKit::Atom * a = *ai;
 	int idx = a->getIdx();
@@ -88,14 +88,14 @@ repositionMolecule(RDKit::ROMol & m, double rotation[3][3],
 	point.x = xx + centroid.x;
 	point.y = yy + centroid.y;
 	point.z = zz + centroid.z;
-	m.getConformer(0).setAtomPos(idx, point);
+	m.getConformer(confId).setAtomPos(idx, point);
     }
     return;
 }
 
 
 
-void rotateMolecule(RDKit::ROMol & m, SiMath::Vector & rotor)
+void rotateMolecule(RDKit::ROMol & m, SiMath::Vector & rotor, unsigned int confId)
 {
     // Build rotation matrix
     SiMath::Matrix rot(3, 3, 0.0);
@@ -115,7 +115,7 @@ void rotateMolecule(RDKit::ROMol & m, SiMath::Vector & rotor)
 
 
     RDKit::ROMol::AtomIterator ai;
-    RDKit::Conformer conf = m.getConformer(0);
+    RDKit::Conformer conf = m.getConformer(confId);
     for (ai = m.beginAtoms(); ai != m.endAtoms(); ai++) {
 
 	RDKit::Atom * a = *ai;
@@ -134,7 +134,7 @@ void rotateMolecule(RDKit::ROMol & m, SiMath::Vector & rotor)
 	point.x = rot[0][0] * x + rot[0][1] * y + rot[0][2] * z;
 	point.y = rot[1][0] * x + rot[1][1] * y + rot[1][2] * z;
 	point.z = rot[2][0] * x + rot[2][1] * y + rot[2][2] * z;
-	m.getConformer(0).setAtomPos(idx, point);
+	m.getConformer(confId).setAtomPos(idx, point);
 
     }
     return;

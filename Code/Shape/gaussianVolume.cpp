@@ -31,7 +31,7 @@ Shape-it is linked against OpenBabel version 2.
 #include <Shape/gaussianVolume.h>
 #include <Shape/solutionInfo.h>
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 
 GaussianVolume::GaussianVolume(void)

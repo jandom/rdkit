@@ -46,7 +46,8 @@ BOOST_PYTHON_MODULE(rdShape) {
     - scoreOnly : only score, don't align (default: false)\n\
     - maxIteration : maximum number of iterations (default: 10) \n\
     - whichScore : possible options are Tanimoto, Tversky_Ref, Tversky_Db (default: Tanimoto) \n\
-    - confIndex : dbMol conformer index (default: 0)              \n\\n\
+    - confIndex : dbMol conformer index (default: 0) \n\
+ \n\
  RETURNS:\n\n\
     double Tanimoto volume overlap coefficient\n\
 \n";

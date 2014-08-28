@@ -154,14 +154,14 @@ SolutionInfo shape(RDKit::ROMol & refMol, RDKit::ROMol & dbMol,
 	if (!scoreOnly) {
 	    // Translate and rotate the molecule towards its centroid and inertia axes
 	    positionMolecule(*bestSolution.dbMol, bestSolution.dbCenter,
-			     bestSolution.dbRotation);
+			     bestSolution.dbRotation, confIndex);
 
 	    // Rotate molecule with the optimal
-	    rotateMolecule(*bestSolution.dbMol, bestSolution.rotor);
+	    rotateMolecule(*bestSolution.dbMol, bestSolution.rotor, confIndex);
 
 	    // Rotate and translate the molecule with the inverse rotation and translation of the reference molecule
 	    repositionMolecule(*bestSolution.dbMol, refVolume.rotation,
-			       refVolume.centroid);
+			       refVolume.centroid, confIndex);
 
 	}
 

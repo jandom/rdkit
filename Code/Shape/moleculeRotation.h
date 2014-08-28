@@ -49,9 +49,9 @@ Shape-it is linked against OpenBabel version 2.
 #include <Geometry/point.h>
 
 
-void positionMolecule(RDKit::ROMol &, RDGeom::Point3D &, double[3][3]);
-void repositionMolecule(RDKit::ROMol &, double[3][3], RDGeom::Point3D &);
-void rotateMolecule(RDKit::ROMol &, SiMath::Vector &);
+void positionMolecule(RDKit::ROMol &, RDGeom::Point3D &, double[3][3], unsigned int confId);
+void repositionMolecule(RDKit::ROMol &, double[3][3], RDGeom::Point3D &, unsigned int confId);
+void rotateMolecule(RDKit::ROMol &, SiMath::Vector &, unsigned int confId);
 
 
 

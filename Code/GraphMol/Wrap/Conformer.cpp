@@ -28,6 +28,23 @@ RDGeom::Point3D GetAtomPos(const Conformer *conf, unsigned int aid) {
   return res;
 }
 
+PyObject *convertPoint(RDGeom::Point3D &point){
+  PyObject *res = PyTuple_New(3);
+  PyTuple_SetItem(res,0,PyFloat_FromDouble(point.x));
+  PyTuple_SetItem(res,1,PyFloat_FromDouble(point.y));
+  PyTuple_SetItem(res,2,PyFloat_FromDouble(point.z));
+  return res;
+}
+
+PyObject* GetPos(const Conformer *conf) {
+RDGeom::POINT3D_VECT pos=conf->getPositions();
+PyObject *res = PyTuple_New(pos.size());
+for(int idx=0;idx<pos.size();idx++){
+      PyTuple_SetItem(res,idx,convertPoint(pos[idx]));
+}
+  return res;
+}
+
 void SetAtomPos(Conformer *conf, unsigned int aid, python::object loc) {
   // const std::vector<double> &loc) {
   int dim = python::extract<int>(loc.attr("__len__")());
@@ -57,7 +74,7 @@ struct conformer_wrapper {
 
         .def("GetId", &Conformer::getId, "Get the ID of the conformer")
         .def("SetId", &Conformer::setId, "Set the ID of the conformer\n")
-
+        .def("GetPositions", GetPos, "Get the posistions\n")
         .def("GetAtomPosition", GetAtomPos, "Get the posistion of an atom\n")
 
         .def("SetAtomPosition", SetAtomPos,

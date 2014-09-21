@@ -29,3 +29,4 @@ if(RDK_BUILD_SWIG_WRAPPERS)
   add_subdirectory(JavaWrappers)
 endif()
 
+add_subdirectory(RDCuda)

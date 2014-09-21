@@ -62,6 +62,54 @@ macro(rdkit_library)
                         RUNTIME_OUTPUT_DIRECTORY ${RDK_RUNTIME_OUTPUT_DIRECTORY}
                         LIBRARY_OUTPUT_DIRECTORY ${RDK_LIBRARY_OUTPUT_DIRECTORY})
 endmacro(rdkit_library)
+
+macro(rdkit_cuda_library)
+  PARSE_ARGUMENTS(RDKLIB
+    "LINK_LIBRARIES;DEST"
+    "SHARED"
+    ${ARGN})
+  CAR(RDKLIB_NAME ${RDKLIB_DEFAULT_ARGS})
+  CDR(RDKLIB_SOURCES ${RDKLIB_DEFAULT_ARGS})
+  if(MSVC)
+    cuda_add_library(${RDKLIB_NAME} ${RDKLIB_SOURCES})
+    target_link_libraries(${RDKLIB_NAME} ${Boost_SYSTEM_LIBRARY} )
+    INSTALL(TARGETS ${RDKLIB_NAME} EXPORT ${RDKit_EXPORTED_TARGETS}
+            DESTINATION ${RDKit_LibDir}/${RDKLIB_DEST}
+            COMPONENT dev )
+  else(MSVC)
+    # we're going to always build in shared mode since we
+    # need exceptions to be (correctly) catchable across
+    # boundaries. As of now (June 2010), this doesn't work
+    # with g++ unless libraries are shared.
+      cuda_add_library(${RDKLIB_NAME} SHARED ${RDKLIB_SOURCES})
+      INSTALL(TARGETS ${RDKLIB_NAME} EXPORT ${RDKit_EXPORTED_TARGETS}
+              DESTINATION ${RDKit_LibDir}/${RDKLIB_DEST}
+              COMPONENT runtime )
+      if(RDK_INSTALL_STATIC_LIBS)
+        cuda_add_library(${RDKLIB_NAME}_static ${RDKLIB_SOURCES})
+        INSTALL(TARGETS ${RDKLIB_NAME}_static EXPORT ${RDKit_EXPORTED_TARGETS}
+                DESTINATION ${RDKit_LibDir}/${RDKLIB_DEST}
+                COMPONENT dev )
+      endif(RDK_INSTALL_STATIC_LIBS)
+    IF(RDKLIB_LINK_LIBRARIES)
+      target_link_libraries(${RDKLIB_NAME} ${RDKLIB_LINK_LIBRARIES})
+    ENDIF(RDKLIB_LINK_LIBRARIES)
+  endif(MSVC)
+  if(WIN32)
+    set_target_properties(${RDKLIB_NAME} PROPERTIES 
+                          OUTPUT_NAME "${RDKLIB_NAME}" 
+                          VERSION "${RDKit_ABI}.${RDKit_Year}.${RDKit_Month}")
+  else(WIN32)
+    set_target_properties(${RDKLIB_NAME} PROPERTIES 
+                          OUTPUT_NAME ${RDKLIB_NAME} 
+                          VERSION ${RDKit_VERSION} 
+                          SOVERSION ${RDKit_ABI} )
+  endif(WIN32)            
+  set_target_properties(${RDKLIB_NAME} PROPERTIES 
+                        ARCHIVE_OUTPUT_DIRECTORY ${RDK_ARCHIVE_OUTPUT_DIRECTORY}
+                        RUNTIME_OUTPUT_DIRECTORY ${RDK_RUNTIME_OUTPUT_DIRECTORY}
+                        LIBRARY_OUTPUT_DIRECTORY ${RDK_LIBRARY_OUTPUT_DIRECTORY})
+endmacro(rdkit_cuda_library)
   
 macro(rdkit_headers)
   if (NOT RDK_INSTALL_INTREE)

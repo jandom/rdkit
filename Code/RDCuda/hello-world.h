@@ -7,9 +7,9 @@
 // nvcc hello-world.cu -L /usr/local/cuda/lib -lcudart -o hello-world
 
 #include <stdio.h>
-
+#include <GraphMol/GraphMol.h>
 namespace RDCuda {
     
     void helloworld();
-
+    void hellomol(RDKit::ROMol &mol);
 }

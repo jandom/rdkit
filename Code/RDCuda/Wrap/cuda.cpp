@@ -8,9 +8,14 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDBoost/Wrap.h>
+
 #include <boost/python.hpp>
+
+#include <RDBoost/Wrap.h>
+#include <GraphMol/GraphMol.h>
+
 #include <RDCuda/hello-world.h>
+
 namespace python = boost::python;
 
 
@@ -21,6 +26,13 @@ namespace RDKit {
 	  RDCuda::helloworld();
 	  printf("%s\n","After");
   };
+
+  bool doHelloMol(RDKit::ROMol &mol){
+
+  	  printf("%s\n","Before");
+  	  RDCuda::hellomol(mol);
+  	  printf("%s\n","After");
+    };
 
 }
 
@@ -42,5 +54,9 @@ BOOST_PYTHON_MODULE(cuda)
 	    a boolean indicating whether or not the smoothing worked.\n\
 	\n";
 	  python::def("helloworld", RDKit::doHelloWorld, docString.c_str());
+
+
+	  docString = "empty";
+	  python::def("hellomol", RDKit::doHelloMol, python::arg("mol"), docString.c_str());
 
 }

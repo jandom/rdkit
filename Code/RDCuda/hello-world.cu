@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "hello-world.h"
+#include <GraphMol/GraphMol.h>
 const int N = 16; 
 const int blocksize = 16; 
 
@@ -19,6 +20,10 @@ namespace RDCuda {
     void hello(char *a, int *b) 
     {
     	a[threadIdx.x] += b[threadIdx.x];
+    }
+    
+    void hellomol(RDKit::ROMol &mol) {
+        printf("mol.GetNumAtoms %d\n", mol.getNumAtoms());
     }
     
     void helloworld()

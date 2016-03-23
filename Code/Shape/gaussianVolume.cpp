@@ -1,12 +1,12 @@
 /*******************************************************************************
 gaussianVolume.cpp - Shape-it
- 
+
 Copyright 2012 by Silicos-it, a division of Imacosi BVBA
 
 This file is part of Shape-it.
 
 	Shape-it is free software: you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published 
+	it under the terms of the GNU Lesser General Public License as published
 	by the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
@@ -150,7 +150,7 @@ void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv, unsigned int confI
     // Vector to keep track of parents of an overlap
     std::vector < std::pair < unsigned int, unsigned int > >parents(N);
 
-    // Create a vector to keep track of the overlaps 
+    // Create a vector to keep track of the overlaps
     // Overlaps are stored as sets
     std::vector < std::set < unsigned int >*>overlaps(N);
     std::set < unsigned int >::iterator setIter;
@@ -170,7 +170,7 @@ void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv, unsigned int confI
 	    continue;
 	}
 	// First atom append self to the list
-	// Store it at [index] 
+	// Store it at [index]
 	gv.gaussians[atomIndex].center.x = conf.getAtomPos(idx).x;
 	gv.gaussians[atomIndex].center.y = conf.getAtomPos(idx).y;
 	gv.gaussians[atomIndex].center.z = conf.getAtomPos(idx).z;
@@ -256,7 +256,7 @@ void listAtomVolumes(RDKit::ROMol & mol, GaussianVolume & gv, unsigned int confI
     for (unsigned int l = 2; l < LEVEL; ++l) {
 	// List of atom-atom overlaps is made => gv.gaussians[startLevel .. nextLevel-1];
 	// Now update the overlap lists for each overlap in this level
-	// Create the next overlap Gaussian 
+	// Create the next overlap Gaussian
 	// And add it to the vector of overlaps
 	for (unsigned int i = startLevel; i < nextLevel; ++i) {
 	    // Parent indices
@@ -362,7 +362,7 @@ void initOrientation(GaussianVolume & gv)
 {
     double x(0.0), y(0.0), z(0.0);
 
-    // Scale centroid and moments with self volume  
+    // Scale centroid and moments with self volume
     gv.centroid.x /= gv.volume;
     gv.centroid.y /= gv.volume;
     gv.centroid.z /= gv.volume;
@@ -431,7 +431,7 @@ void initOrientation(GaussianVolume & gv)
 #else
     mass /= gv.volume;
     int nPts = gv.gaussians.size();
-    RDGeom::Transform3D *tf=RDNumeric::computeCanonicalTransformFromCovMat(&mass,nPts);
+    RDGeom::Transform3D *tf=RDNumeric::Alignments::computeCanonicalTransformFromCovMat(&mass,nPts);
     for(unsigned int i=0;i<3;++i){
       for(unsigned int j=0;j<3;++j){
         gv.rotation[i][j] = tf->getVal(j,i);
@@ -447,7 +447,7 @@ void initOrientation(GaussianVolume & gv)
       }
       std::cerr<<std::endl;
     }
-#endif    
+#endif
     double det = gv.rotation[0][0] * gv.rotation[1][1] * gv.rotation[2][2]
 	+ gv.rotation[2][1] * gv.rotation[1][0] * gv.rotation[0][2]
 	+ gv.rotation[0][1] * gv.rotation[1][2] * gv.rotation[2][0]
@@ -513,7 +513,7 @@ double atomOverlap(GaussianVolume & gRef, GaussianVolume & gDb)
     // Overlap volume
     double overlapVol(0.0);
 
-    // First compute atom-atom overlaps 
+    // First compute atom-atom overlaps
     for (unsigned int i(0); i < N1; ++i) {
 	for (unsigned int j(0); j < N2; ++j) {
 	    // Scaling constant

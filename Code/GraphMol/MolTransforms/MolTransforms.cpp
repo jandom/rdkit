@@ -13,6 +13,7 @@
 #include <GraphMol/QueryOps.h>
 #include <Numerics/Alignment/AlignPoints.h>
 #include <Numerics/SymmMatrix.h>
+#include <Numerics/EigenSolvers/PowerEigenSolver.h>
 #include <Numerics/Matrix.h>
 #include <Geometry/Transform3D.h>
 #include <stack>
